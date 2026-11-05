@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index HTML</title>
+</head>
+<body>
+    <h1>Index HTML</h1>
+    <button id="ventanaHija">Lanzar ventana satélite</button>
+
+
+    <script>
+     const button=document.getElementById("ventanaHija");
+           button.addEventListener("click",envioDatosSatelite);
+        function envioDatosSatelite(){
+        //VARIABLES QUE USAMOS PARA DAR TAMAÑO Y POSICION PARA LA PANTALLA HIJA
+        const ancho = 400; 
+        const alto = 300;
+        // Obtener el ancho y alto del área de visualización del navegador actual
+        let height = screen.availHeight;
+        let width = screen.availWidth;
+        // Calculamos el centro en relación a la pantalla actual
+       let left = (width - ancho) / 2;
+       let top = (height - alto) / 2;
+       let ventanaSatelite= window.open("satelite.html",'miVentana',`width=${ancho},height=${alto},left=${left},top=${top},toolbar=no,scrollbars=yes`);
+           
+
+        }
+    </script>
+</body>
+</html>
