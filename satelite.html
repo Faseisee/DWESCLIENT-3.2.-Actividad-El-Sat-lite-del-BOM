@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana Satélite</title>
+</head>
+<body>
+    <h1>Ventana Satélite</h1>
+
+    <p id="bienvenida"></p>
+    <p id="mensajeAutodestruccion"></p>
+
+    <button id="Redirigir_Con">Redirigir con Historial</button>
+    <button id="Redirigir_Sin">Redirigir sin Historial</button>
+    <button id="Autodestruccion">Autodestrucción en 5 segundos</button>
+<script>
+    const bienvenida=document.getElementById("bienvenida");
+    bienvenida.innerText="Hola usuario"
+    //OBTENEMOS INFORMACION DEL NAVEGADOR CON navigator.userAgent
+    const NavInfo=navigator.userAgent;
+    //VERIFICAMOS QUE LA CADENA QUE DEVUELVA NavInfo INLCUYA LOS DIFERENTES SISTEMAS OPERATIVOS Y LOS TRATAMOS EN CADA CASO
+    switch(true){
+        case NavInfo.includes("Windows"):
+            //NO HACE FALTA VOLVER A DECLARAR LA CONSTANTE YA QUE SOLO LE AÑADIMOS EL SISTEMA OPERATIVO EN CADA CASO
+            bienvenida.innerText+=" de Windows";
+            break;
+
+        case  NavInfo.includes("Linux"):
+             bienvenida.innerText+=" de Linux";
+            break;
+
+        case  NavInfo.includes("Mac"):
+             bienvenida.innerText+=" de Mac";
+            break;
+
+        default:
+            bienvenida.innerText+=" No he podido encontrar tu sistema operativo"
+            break;
+    }
+
+//CONTROLAMOS LOS BOTONES PARA AHORA IMPLEMENTAR LA FUNCIONALIDAD DE CADA UNO 
+const buttonConHistorial=document.getElementById("Redirigir_Con");
+const buttonSinHistorial=document.getElementById("Redirigir_Sin");
+const buttonAutodestruccion=document.getElementById("Autodestruccion");
+
+//AÑADIMOS LA FUNCIONALIDAD PARA CADA UNO 
+buttonConHistorial.addEventListener("click",function(){
+    window.opener.location.assign("https://www.ilerna.es/");
+})
+
+buttonSinHistorial.addEventListener("click",function(){
+    window.opener.location.replace("https://www.ilerna.es/");
+})
+
+buttonAutodestruccion.addEventListener("click",function(){
+
+    const pAutodestruccion=document.getElementById("mensajeAutodestruccion");
+   /*
+    ALTERNATIVA MÁS SENCILLA:
+    
+    setTimeout(function() {
+    pAutodestruccion.textContent = `La ventana se cerrará en 5 segundos`;   
+    window.close();
+    }, 5000);
+*/
+
+    //LA ACTIVIDAD NO SE SI SE REFIERE A QUE HAGAMOS UN CONTADOR EN VIVO PERO SERÍA UNA COSA ASI
+    let segundos = 5;
+    pAutodestruccion.textContent = `La ventana se cerrará en ${segundos} segundos`;
+    let temporizador = setInterval(function() {
+
+    segundos--;
+
+    // ACTUALIZAMOS EL PARRAFO DE AUTODESTRUCCION CON LOS SEGUNDOS QUE QUEDAN.
+        pAutodestruccion.textContent=`La ventana se cerrará en ${segundos} segundos`;
+    // COMPROBAMOS SI LOS SEGUNDOS HAN LLEGADO A 0
+        if(segundos===0){
+    // SI ES ASI DETENEMOS EL INTERVALO PARA QUE NO SE ESTE EJECUTANDO INFINITAMENTE
+            clearInterval(temporizador);
+        }
+    }, 1000);
+    setTimeout(function() {
+        // POR ÚLTIMO CERRAMOS LA VENTANA
+            window.close();
+    }, 5000);
+    
+})
+        
+
+</script>
+</body>
+</html>
